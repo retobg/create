@@ -1,0 +1,82 @@
+<?xml version="1.0"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.wymiwyg</groupId>
+        <artifactId>wymiwyg</artifactId>
+        <version>0.9.4</version>
+        <relativePath />
+    </parent>
+    <groupId>org.wymiwyg.js</groupId>
+    <artifactId>createjs-theme</artifactId>
+    <version>1.0.0alpha1-SNAPSHOT</version>
+    <name>The default css for Create.js</name>
+    <description>This artifacts provided the default themes css.</description>	
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+	
+    <build>
+        <resources>
+            <resource>
+                <directory>../../</directory>
+                <includes>
+                    <include>themes/**</include>
+                </includes>
+            </resource>
+            <resource>
+                <directory>../../examples</directory>
+                <includes>
+                    <include>font-awesome/**</include>
+                </includes>
+            </resource>
+        </resources>
+        <plugins>
+           <!-- <plugin>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>2.6</version>
+                <executions>
+                    <execution>
+                        <id>copy-resources</id>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${basedir}/target/classes/font-awesome</outputDirectory>
+                            <resources>          
+                                <resource>
+                                    <directory>../../examples/font-awesome</directory>
+                                    <filtering>false</filtering>
+                                </resource>
+                            </resources>              
+                        </configuration>            
+                    </execution>
+                </executions>
+            </plugin> -->
+            <!-- <plugin>
+                <artifactId>maven-remote-resources-plugin</artifactId>
+                <version>1.2.1</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>bundle</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <resourcesDirectory>../../themes/</resourcesDirectory>
+                    <includes>
+                        <include>**/*</include>
+                    </includes>
+                    <excludes>
+                        <exclude>maven/**</exclude>
+                    </excludes>
+                </configuration>
+            </plugin> -->
+        </plugins>
+    </build>
+
+</project>
