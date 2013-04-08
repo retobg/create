@@ -1,0 +1,156 @@
+<?xml version="1.0"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.wymiwyg</groupId>
+        <artifactId>wymiwyg</artifactId>
+        <version>0.9.4</version>
+        <relativePath />
+    </parent>
+    <groupId>org.wymiwyg.js</groupId>
+    <artifactId>createjs</artifactId>
+    <version>1.0.0alpha1-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <name>Create.js maven project</name>
+    <description>This project provides create.js (http://createjs.org/) as a maven artifact</description>	
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+	
+    <dependencies>
+        <!--	<dependency>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>jquery-amd</artifactId>
+            <version>1.7.1-alpha-1</version>
+            <type>js</type>
+        </dependency> -->
+        <dependency>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>jquery-ui-amd</artifactId>
+            <version>1.8.16-alpha-1</version>
+            <type>js</type>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <!-- <sourceDirectory>../../src</sourceDirectory> -->
+        <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>js-import-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>webminifier-maven-plugin</artifactId>
+                <configuration>
+                    <jsCompressorType>NONE</jsCompressorType>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-site-plugin</artifactId>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.apache.maven.doxia</groupId>
+                        <artifactId>doxia-module-confluence</artifactId>
+                        <version>1.2</version>
+                    </dependency>
+                </dependencies>
+                <configuration>
+                    <excludeModules>apt</excludeModules>
+                </configuration>
+            </plugin>
+        </plugins>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <artifactId>maven-resources-plugin</artifactId>
+                    <version>2.5</version>
+                    <executions>
+                        <execution>
+                            <phase>prepare-package</phase>
+                            <goals>
+                                <goal>resources</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>js-import-maven-plugin</artifactId>
+                    <version>1.0.1</version>
+                    <configuration>
+                        <sourceJsFolder>../../</sourceJsFolder>
+                        <!-- generating an html file that makes the minifier happy -->
+                        <targetJsPath>./classes</targetJsPath>
+                        <excludes>
+                            <exclude>maven/**</exclude>
+                            <!-- otherwise the files gets copied to target and the
+                            minifier taked them if they are referenced with amd -->
+                            <exclude>deps/jquery-1.7.1.min.js</exclude>
+                            <exclude>jquery-ui-1.8.18.custom.min.js</exclude>
+                        </excludes>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <phase>prepare-package</phase>
+                            <goals>
+                                <goal>import-js</goal>
+                                <goal>generate-html</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>webminifier-maven-plugin</artifactId>
+                    <version>1.0.1</version>
+                    <configuration>
+                        <projectSourceFolder>../../</projectSourceFolder>
+                        <sourceFolder>${project.build.directory}/classes/js</sourceFolder>
+                        <splitDependencies>true</splitDependencies>
+                        <destinationFolder>target/min/classes</destinationFolder>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <phase>package</phase>
+                            <goals>
+                                <goal>minify-js</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>build-helper-maven-plugin</artifactId>
+                    <version>1.7</version>
+                    <executions>
+                        <execution>
+                            <id>attach-artifacts</id>
+                            <phase>package</phase>
+                            <goals>
+                                <goal>attach-artifact</goal>
+                            </goals>
+                            <configuration>
+                                <artifacts>
+                                    <artifact>
+                                        <file>target/min/classes/1.js</file>
+                                        <type>js</type>
+                                    </artifact>
+                                </artifacts>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+
+</project>
